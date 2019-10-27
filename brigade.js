@@ -3,7 +3,7 @@ const { events, Job } = require("brigadier");
 events.on("push", async () => {
     var compileStep = new Job("compile", "mcr.microsoft.com/dotnet/core/sdk:3.0")
     compileStep.tasks = [
-        "ls src",
+        "cd src",
         "dotnet build",
         "dotnet publish",
       ];
