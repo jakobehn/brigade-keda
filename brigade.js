@@ -7,6 +7,7 @@ events.on("push", async () => {
         "dotnet build",
         "dotnet publish",
       ];
+      
     // var testStep = new Job("test", "example/tester:latest")
     // var tagStep = new Job("tag:, "example/releasetagger:latest")
     // We could continue on creating the remaining steps
