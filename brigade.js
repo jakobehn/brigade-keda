@@ -27,5 +27,6 @@ events.on("push", async () => {
     hello.resourceRequests.cpu = "1"
     hello.resourceRequests.memory = "1G"
     
+    
     hello.run()    
   });
