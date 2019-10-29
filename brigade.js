@@ -24,6 +24,7 @@ events.on("push", async () => {
     hello.tasks = ["echo Hello Brigade from Azure"]
     
   
+    
     hello.host.name = "virtual-kubelet"
     hello.resourceRequests.cpu = "1"
     hello.resourceRequests.memory = "1G"
