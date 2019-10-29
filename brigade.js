@@ -23,10 +23,5 @@ events.on("push", async () => {
     hello.image = "alpine:3.4"
     hello.tasks = ["echo Hello Brigade from Azure"]
     
-    hello.host.name = "virtual-kubelet"
-    hello.resourceRequests.cpu = "1"
-    hello.resourceRequests.memory = "1G"
-    
-    
     hello.run()    
   });
