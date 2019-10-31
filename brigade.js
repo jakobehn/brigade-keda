@@ -23,6 +23,7 @@ events.on("push", async () => {
     hello.image = "alpine:3.4"
     hello.tasks = ["echo Hello Brigade from Azure"]
     
+    
     hello.run()    
   });
   
