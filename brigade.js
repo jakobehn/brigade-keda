@@ -22,6 +22,7 @@ events.on("push", async () => {
     var hello = new Job("linux-job")
     hello.image = "alpine:3.4"
     hello.tasks = ["echo Hello Brigade from Azure"]
+
     
     
     hello.run()    
