@@ -1,16 +1,18 @@
 const { events, Job } = require("brigadier");
 
+//Handler for exec event
 events.on("exec", () => {
   var job = new Job("say-hello-world", "alpine:3.8");
   job.tasks = [
     "echo Hello",
-    "echo World"
+    "echo World2"
   ];
 
   job.run();  
 });
 
-events.on("simpleevent", (e, p) => {  // handler for a SimpleEvent
+
+events.on("simpleevent", (e, p) => { 
   var echo = new Job("echo-simpleevent", "alpine:3.8");
   echo.tasks = [
     "echo Project " + p.name,
@@ -22,7 +24,8 @@ events.on("simpleevent", (e, p) => {  // handler for a SimpleEvent
   echo.run();
 });
 
-events.on("cloudevent", (e, p) => { // handler for a CloudEvent
+
+events.on("cloudevent", (e, p) => { 
   var echo = new Job("echo-cloudevent", "alpine:3.8");
   echo.tasks = [
     "echo Project " + p.name,
