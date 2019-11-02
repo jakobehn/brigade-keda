@@ -1,0 +1,33 @@
+kashti:
+  enabled: true
+
+rbac:
+  enabled: true
+
+genericGateway:
+  enabled: true
+  registry: brigadecore
+  name: brigade-generic-gateway
+  service:
+    name: brigade-generic-service
+    type: LoadBalancer
+    externalPort: 8081
+    internalPort: 8000
+  serviceAccount:
+    create: true
+    name:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      certmanager.k8s.io/cluster-issuer: "letsencrypt-prod"
+      certmanager.k8s.io/acme-challenge-type: http01
+
+    hosts:
+      - brigadedemo.ehn.nu
+    paths:
+    - /
+    tls:
+      - secretName: brigade-events
+        hosts:
+        - brigadedemo.ehn.nu
