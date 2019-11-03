@@ -10,7 +10,7 @@ genericGateway:
   name: brigade-generic-gateway
   service:
     name: brigade-generic-service
-    type: LoadBalancer
+    type: ClusterIP
     externalPort: 8081
     internalPort: 8000
   serviceAccount:

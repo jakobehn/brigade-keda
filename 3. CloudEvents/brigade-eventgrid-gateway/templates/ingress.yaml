@@ -17,7 +17,11 @@ spec:
   - host: {{ .Values.ingress.host }}
     http:
       paths:
-      - path: /
+      - path: /cloudevents
         backend:
           serviceName: {{ template "brigade-eventgrid-gateway.name" . }}
           servicePort: {{ .Values.service.externalPort }}
+      - path: /simpleevents
+        backend:
+          serviceName: brigade-brigade-generic-gateway
+          servicePort: {{ .Values.service.externalPort }}          
