@@ -9,4 +9,7 @@ helm install --name cert-manager --namespace cert-manager stable/cert-manager
 kubectl create -f clusterissuer-staging.yaml
 
 
-helm install -n brigade-eventgrid-gateway . --set ingress.host=brigadedemo.ehn.nu
+helm install -n brigade-eventgrid-gateway .
+
+#eventgrid webhook
+https://brigadedemo.ehn.nu/cloudevents/v0.1/brigade-dacc8deb3679a7b2e9771cdd010762c651b7e9195fc7134aecc9fa/mysecret
