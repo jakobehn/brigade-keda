@@ -23,7 +23,7 @@ events.on("simpleevent", (event, project) => {
 
     var helm_job = new Job("helm-job", HELM_CONTAINER);
     helm_job.env = {
-        'HELM_HOST': project.secrets.helmHost
+        'HELM_HOST': "10.0.119.135:44134"
     };
     helm_job.tasks = ["helm init --client-only", `helm delete --purge samplewebapp-${prId}`];
 
