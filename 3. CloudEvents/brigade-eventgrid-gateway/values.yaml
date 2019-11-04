@@ -18,10 +18,15 @@ service:
 # more information here - https://docs.microsoft.com/en-us/azure/event-grid/security-authentication
 ingress:
   enabled: true
-# by default, this chart uses TLS the annotations for kube-lego and nginx-ingress
-# if you have a different ingress controller, make sure to change them in ingress.yaml
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    certmanager.k8s.io/cluster-issuer: "letsencrypt-prod"
+    certmanager.k8s.io/acme-challenge-type: http01
 
-  # annotations:
-  #   kubernetes.io/tls-acme: "true"
-  #   kubernetes.io/ingress.class: "nginx"
-  host: <your-HTTPS-endpoint>
+  host: brigadedemo.ehn.nu
+  paths:
+  - /cloudevents
+  tls:
+    - secretName: brigade-events
+      hosts:
+      - brigadedemo.ehn.nu
