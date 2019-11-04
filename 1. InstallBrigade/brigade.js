@@ -15,11 +15,15 @@ events.on("exec", () => {
     "echo World"
   ];  
 
-  var jobGroup = new Group();
-  jobGroup.add(helloWorldJob);
-  jobGroup.add(goodbyeJob);
+  Group.runEach([helloWorldJob, goodbyeJob]);
+  
+  //Run tasks in parallell
 
-  jobGroup.runAll();
+// var jobGroup = new Group();
+  // jobGroup.add(helloWorldJob);
+  // jobGroup.add(goodbyeJob);
+
+  // jobGroup.runAll();
   
 });
 
