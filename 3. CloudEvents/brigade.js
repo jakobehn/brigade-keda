@@ -7,7 +7,7 @@ events.on("Microsoft.Storage.BlobDeleted", (e, p) => {
 })
 
 events.on("Microsoft.Storage.BlobCreated", (e, p) => {
-  console.log("Received BlobCreated event:")
+  echo("Received BlobCreated event:")
   var str = JSON.stringify(JSON.parse(e.payload),null,2);  
   console.log(str);
 })
