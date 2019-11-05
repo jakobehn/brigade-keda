@@ -21,13 +21,13 @@ events.on("simpleevent", (event, project) => {
         return;
     }
 
-    var helm_job = new Job("helm-job", HELM_CONTAINER);
+    var helm_job = new Job("helm-delete-release", HELM_CONTAINER);
     helm_job.env = {
         'HELM_HOST': "10.0.119.135:44134"
     };
     helm_job.tasks = ["helm init --client-only", `helm delete --purge samplewebapp-${prId}`];
 
-    var kubectl_job = new Job("kubectl-job", KUBECTL_CONTAINER);
+    var kubectl_job = new Job("kubectl-delete-ns", KUBECTL_CONTAINER);
     kubectl_job.tasks = [`kubectl delete namespace samplewebapp-${prId}`];
 
     console.log("==> Running helm_job Job")
