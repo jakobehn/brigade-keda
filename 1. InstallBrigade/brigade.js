@@ -19,11 +19,7 @@ events.on("exec", () => {
   
   //Run tasks in parallell
 
-// var jobGroup = new Group();
-  // jobGroup.add(helloWorldJob);
-  // jobGroup.add(goodbyeJob);
-
-  // jobGroup.runAll();
+// Group.runAll([helloWorldJob, goodbyeJob]);
   
 });
 
