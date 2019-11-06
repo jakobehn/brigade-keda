@@ -33,7 +33,7 @@ metadata:
 spec:
   scaleTargetRef:
     deploymentName: order-processor
-  minReplicaCount: 1    #Change to define how many minimum replicas you want
+  minReplicaCount: 0    #Change to define how many minimum replicas you want
   maxReplicaCount: 10
   pollingInterval: 5    # Optional. Default: 30 seconds
   cooldownPeriod:  30   # Optional. Default: 300 seconds
