@@ -1,10 +1,10 @@
 const { events, Job } = require("brigadier");
 const util = require('util')
 
-const HELM_VERSION = "v2.13.0"
+const HELM_VERSION = "v3.7.0"
 const HELM_CONTAINER = "lachlanevenson/k8s-helm:" + HELM_VERSION;
 
-const KUBECTL_VERSION = "v1.12.8";
+const KUBECTL_VERSION = "v1.22.2";
 const KUBECTL_CONTAINER = "lachlanevenson/k8s-kubectl:" + KUBECTL_VERSION;
 
 events.on("simpleevent", (event, project) => {
@@ -25,7 +25,7 @@ events.on("simpleevent", (event, project) => {
     helm_job.env = {
         'HELM_HOST': "10.0.119.135:44134"
     };
-    helm_job.tasks = ["helm init --client-only", `helm delete --purge samplewebapp-${prId}`];
+    helm_job.tasks = [`helm install  samplewebapp-${prId}`];
 
     var kubectl_job = new Job("kubectl-delete-ns", KUBECTL_CONTAINER);
     kubectl_job.tasks = [`kubectl delete namespace samplewebapp-${prId}`];
