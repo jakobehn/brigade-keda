@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "name": "brigade-55cbf57f7aaeb59afa1fe4d33ca6a5a635eefe060b057c423c97a0",
+    "creationTimestamp": null,
+    "labels": {
+      "app": "brigade",
+      "component": "project",
+      "heritage": "brigade"
+    },
+    "annotations": {
+      "projectName": "jakob/pr"
+    }
+  },
+  "stringData": {
+    "allowHostMounts": "false",
+    "allowPrivilegedJobs": "false",
+    "brigadeConfigPath": "",
+    "brigadejsPath": "",
+    "buildStorageSize": "",
+    "cloneURL": "https://github.com/brigadecore/empty-testbed.git",
+    "defaultConfig": "",
+    "defaultConfigName": "",
+    "defaultScript": "const { events, Job } = require(\"brigadier\");\r\nconst util = require('util')\r\n\r\nconst HELM_VERSION = \"v3.7.0\"\r\nconst HELM_CONTAINER = \"lachlanevenson/k8s-helm:\" + HELM_VERSION;\r\n\r\nconst KUBECTL_VERSION = \"v1.22.2\";\r\nconst KUBECTL_CONTAINER = \"lachlanevenson/k8s-kubectl:\" + KUBECTL_VERSION;\r\n\r\nevents.on(\"simpleevent\", (event, project) =\u003e {\r\n    const payload = JSON.parse(event.payload);\r\n    const prId = payload.resource.pullRequestId;\r\n\r\n    if (!payload.resource.sourceRefName.includes('/feature/') \u0026\u0026 !payload.resource.sourceRefName.includes('/bug/')) {\r\n        console.log(`The source branch ${payload.resource.sourceRefName} is not a /feature/ or /bug/ and is therefore skipped.`)\r\n        return;\r\n    }\r\n\r\n    if (payload.resource.status !== \"completed\" \u0026\u0026 payload.resource.status !== \"abandoned\") {\r\n        console.log(`PullRequest not complete or abandoned (current status: ${payload.resource.status}).`);\r\n        return;\r\n    }\r\n\r\n    var helm_job = new Job(\"helm-delete-release\", HELM_CONTAINER);\r\n    helm_job.env = {\r\n        'HELM_HOST': \"10.0.119.135:44134\"\r\n    };\r\n    helm_job.tasks = [`helm install  samplewebapp-${prId}`];\r\n\r\n    var kubectl_job = new Job(\"kubectl-delete-ns\", KUBECTL_CONTAINER);\r\n    kubectl_job.tasks = [`kubectl delete namespace samplewebapp-${prId}`];\r\n\r\n    console.log(\"==\u003e Running helm_job Job\")\r\n    helm_job.run().then(helmResult =\u003e {\r\n        console.log(\"==\u003e helm job results\")\r\n        console.log(helmResult.toString())\r\n        console.log(\"==\u003e helm job done\")\r\n\r\n        kubectl_job.run().then(kubectlResult =\u003e {\r\n            console.log(\"==\u003e kubectl job results\");\r\n            console.log(kubectlResult.toString());\r\n            console.log(\"==\u003e kubectl job done\");\r\n        });\r\n    })\r\n});\r\n\r\nevents.on(\"error\", (e) =\u003e {\r\n    console.log(\"Error event \" + util.inspect(e, false, null))\r\n    console.log(\"==\u003e Event \" + e.type + \" caused by \" + e.provider + \" cause class\" + e.cause + e.cause.reason)\r\n})\r\n\r\nevents.on(\"after\", (e) =\u003e {\r\n    console.log(\"After event fired \" + util.inspect(e, false, null))\r\n});",
+    "defaultScriptName": "",
+    "genericGatewaySecret": "supersecret",
+    "github.baseURL": "",
+    "github.token": "",
+    "github.uploadURL": "",
+    "imagePullSecrets": "",
+    "initGitSubmodules": "false",
+    "kubernetes.allowSecretKeyRef": "false",
+    "kubernetes.buildStorageClass": "",
+    "kubernetes.cacheStorageClass": "",
+    "namespace": "default",
+    "repository": "github.com/brigadecore/empty-testbed",
+    "secrets": "{}",
+    "serviceAccount": "",
+    "sharedSecret": "",
+    "sshCert": "",
+    "sshKey": "",
+    "vcsSidecar": "",
+    "worker.name": "",
+    "worker.pullPolicy": "IfNotPresent",
+    "worker.registry": "",
+    "worker.tag": "",
+    "workerCommand": ""
+  },
+  "type": "brigade.sh/project"
+}

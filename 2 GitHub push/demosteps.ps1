@@ -4,3 +4,6 @@ curl --header "Content-Type: application/json" --request POST --data '{"key1":"v
 
 #Add webhook to Github
 https://brigadedemo.ehn.nu/events/github 
+
+github app secret
+dc0075071d563578213d92ac5058674d2eba8efb

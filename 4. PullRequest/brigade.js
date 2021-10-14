@@ -25,7 +25,7 @@ events.on("simpleevent", (event, project) => {
     helm_job.env = {
         'HELM_HOST': "10.0.119.135:44134"
     };
-    helm_job.tasks = [`helm install  samplewebapp-${prId}`];
+    helm_job.tasks = [`helm uninstall samplewebapp-${prId} --namespace samplewebapp-${prId}`];
 
     var kubectl_job = new Job("kubectl-delete-ns", KUBECTL_CONTAINER);
     kubectl_job.tasks = [`kubectl delete namespace samplewebapp-${prId}`];

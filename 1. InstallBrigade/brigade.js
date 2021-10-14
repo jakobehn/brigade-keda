@@ -18,20 +18,26 @@ events.on("exec", () => {
   Group.runEach([helloWorldJob, goodbyeJob]);
   
   //Run tasks in parallell
-
-// Group.runAll([helloWorldJob, goodbyeJob]);
-  
+  // Group.runAll([helloWorldJob, goodbyeJob]);
 });
 
 
+
+
+
+
 events.on("simpleevent", (e, p) => { 
+
   var echo = new Job("echo-simpleevent", "alpine:3.8");
+  
   echo.tasks = [
-    "echo Project " + p.name,
-    "echo event type: $EVENT_TYPE"
+    "echo event type: $EVENT_TYPE",
+    "echo event payload: " + JSON.stringify(e.payload)
   ];
+  
   echo.env = {
     "EVENT_TYPE": e.type
   };
+
   echo.run();
 });
