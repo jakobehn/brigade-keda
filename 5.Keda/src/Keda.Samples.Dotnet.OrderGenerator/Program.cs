@@ -1,6 +1,6 @@
-﻿using Bogus;
+﻿using Azure.Messaging.ServiceBus;
+using Bogus;
 using Keda.Samples.Dotnet.Contracts;
-using Microsoft.Azure.ServiceBus;
 using Newtonsoft.Json;
 using System;
 using System.Text;
@@ -23,18 +23,19 @@ namespace Keda.Samples.Dotnet.OrderGenerator
 
         private static async Task QueueOrders(int requestedAmount)
         {
-            var serviceBusConnectionStringBuilder = new ServiceBusConnectionStringBuilder(ConnectionString);
+            //var serviceBusConnectionStringBuilder = new ServiceBusConnectionStringBuilder(ConnectionString);
 
-            var queueClient = new QueueClient(serviceBusConnectionStringBuilder.GetNamespaceConnectionString(), serviceBusConnectionStringBuilder.EntityPath, ReceiveMode.PeekLock);
+            var queueClient = new ServiceBusClient(ConnectionString);
+            var sender = queueClient.CreateSender("orders");
 
             for (int currentOrderAmount = 0; currentOrderAmount < requestedAmount; currentOrderAmount++)
             {
                 var order = GenerateOrder();
                 var rawOrder = JsonConvert.SerializeObject(order);
-                var orderMessage = new Message(Encoding.UTF8.GetBytes(rawOrder));
+                var orderMessage = new ServiceBusMessage(Encoding.UTF8.GetBytes(rawOrder));
 
                 Console.WriteLine($"Queuing order {order.Id} - A {order.ArticleNumber} for {order.Customer.FirstName} {order.Customer.LastName}");
-                await queueClient.SendAsync(orderMessage);
+                await sender.SendMessageAsync(orderMessage);
             }
         }
 

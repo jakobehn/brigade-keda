@@ -6,9 +6,11 @@ $storageAccount = Get-AzStorageAccount  -ResourceGroupName "kedademo" -Name $sto
 $ctx = $storageAccount.Context
 
 
-$queue = Get-AzStorageQueue –Name $queueName –Context $ctx
+$queue = Get-AzStorageQueue -Name $queueName -Context $ctx
 
 for ($i = 0; $i -lt 200; $i++) {
     $queueMessage = [Microsoft.Azure.Storage.Queue.CloudQueueMessage]::new("This is message $i")    
     $sentMessage = $queue.CloudQueue.AddMessageAsync($QueueMessage)
+    [System.Threading.Thread]::Sleep(20)
+    "Sending message $i"
 }
